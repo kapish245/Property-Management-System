@@ -1,0 +1,34 @@
+{
+  "name": "property-management-system",
+  "version": "1.0.0",
+  "description": "Manage property data in organized manner with interactive user interface.",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kapish245/Property-Management-System.git"
+  },
+  "keywords": [
+    "property",
+    "propertys",
+    "management",
+    "system"
+  ],
+  "author": "kapish tikkiwal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kapish245/Property-Management-System/issues"
+  },
+  "homepage": "https://github.com/kapish245/Property-Management-System#readme",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
