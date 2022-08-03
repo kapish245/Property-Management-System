@@ -1,16 +1,22 @@
+const createError = require('http-errors');
+const mongoose = require('mongoose');
+
 const logger = require('../../utils/logger.init');
 const Property = require("../model/property.model");
-const createError = require('http-errors');
 const { options } = require('../routes/property.routes');
 
 module.exports={
     returnAllPropertyData:function(){
-        return new Promise((resolve, reject) => { 
+        return new Promise(async (resolve, reject) => { 
             try {
-                const result = Property.find()
+                const result = await Property.find({},{ __v:0}).lean()
                 logger.info({operation:"returnAllPropertyData",result:result})
+                if(!result){
+                    throw createError(404,"property does not exist");
+                }
                 resolve(result);
             } catch (error) {
+                logger.error(error.message);
                 reject(error)
             }
          })
@@ -20,9 +26,15 @@ module.exports={
             try {
                 const result = await Property.findById(id);
                 logger.info({operation:"returnSinglePropertyData",result:result})
+                if(!result){
+                    throw createError(404,"property does not exist");
+                }
                 resolve(result)
             } catch (error) {
-                reject(new Error(error));
+                if(error instanceof mongoose.CastError)
+                    reject(createError(400,"invalid Property Id"))
+                logger.error(error.message);
+                reject(error);
             }
          })
     },
@@ -40,7 +52,8 @@ module.exports={
             } catch (error) {
                 if(error.name = "ValidationError")
                     reject(createError(422,"All fields [name,description,size] are mandatory"))
-                reject(new Error(error));
+                logger.error(error.message);
+                reject(error);
             }
          })
     },
@@ -48,10 +61,16 @@ module.exports={
         return new Promise(async (resolve, reject) => { 
             try {
                 const result = await Property.findByIdAndUpdate(id,updateBody,{new:true});
+                if(!result){
+                    throw createError(404,"property does not exist");
+                }
                 logger.info({operation:"updatePropertyData",result:result});
                 resolve(result);
             } catch (error) {
-                reject(new Error(error));
+                if(error instanceof mongoose.CastError)
+                    reject(createError(400,"invalid Property Id"))
+                logger.error(error.message);
+                reject(error);
             }
          })
     },
@@ -59,9 +78,15 @@ module.exports={
         return new Promise(async (resolve, reject) => { 
             try {
                 const result = await Property.findByIdAndDelete(id);
+                if(!result){
+                    throw createError(404,"property does not exist");
+                }
                 resolve({operation:"removePropertyData",result:result});
             } catch (error) {
-                reject(new Error(error));
+                if(error instanceof mongoose.CastError)
+                    reject(createError(400,"invalid Property Id"))
+                logger.error(error.message);
+                reject(error);
             }
          })
     },

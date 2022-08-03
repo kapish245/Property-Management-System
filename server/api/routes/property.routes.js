@@ -4,7 +4,7 @@ const router = express.Router();
 const logger = require('../../utils/logger.init');
 const propertyController = require("../controller/property.controller");
 
-router.get("/getProperty",async(req,res)=>{
+router.get("/getProperty",async(req,res,next)=>{
         try {
             const result = await propertyController.getAllProperty();
             res.send({status:"Fetched",result:result})
@@ -22,7 +22,7 @@ router.post("/createProperty",async(req,res,next)=>{
             next(error)
         }
 })
-router.get("/getProperty/:id",async(req,res)=>{
+router.get("/getProperty/:id",async(req,res,next)=>{
     try {
         const result = await propertyController.getSingleProperty(req.params);
         res.send({status:"Fetched",result:result})
@@ -32,7 +32,7 @@ router.get("/getProperty/:id",async(req,res)=>{
 
 })
 
-router.put("/updateProperty/:id",async(req,res)=>{
+router.put("/updateProperty/:id",async(req,res,next)=>{
     try {
         const result = await propertyController.updateProperty(req.params,req.body);
         res.send({status:"Updated",result:result})
@@ -42,7 +42,7 @@ router.put("/updateProperty/:id",async(req,res)=>{
 
 })
 
-router.delete("/deleteProperty/:id",async(req,res)=>{
+router.delete("/deleteProperty/:id",async(req,res,next)=>{
     try {
         const result = await propertyController.deleteProperty(req.params);
         res.send({status:"Deleted",result:result})
