@@ -94,7 +94,7 @@ export class AppComponent implements OnInit {
         this.getAllPropertyData();
       },
       error:(error)=>{
-        this.toast.error({detail:"Error",summary:error.message})
+        this.toast.error({detail:"Error",summary:"Error in deleting property"})
       }
     })
   }
