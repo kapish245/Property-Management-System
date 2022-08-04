@@ -3,7 +3,9 @@ Manage property data in organized manner with interactive user interface.
 
 
 ##Prerequisite 
+
  Nodejs :- v12.15.1 or later
+ 
  Angular :v14 or later
  
  
