@@ -2,7 +2,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const createError = require('http-errors');
-
+const cors = require('cors');
 
 const logger = require('./utils/logger.init');
 const propertyRouter = require('./api/routes/property.routes');
@@ -15,6 +15,9 @@ require('dotenv').config();
 //middlewares
 app.use(require("morgan")("combined", { "stream": logger.stream }));
 app.use(express.json())
+app.use(cors({
+    origin:process.env.ALLOWED_ORIGIN
+}))
 app.use('/api',propertyRouter);
 //routes
 app.get("/",(req,res)=>{
