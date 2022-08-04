@@ -44,7 +44,7 @@ export class AddPropertyDialogComponent implements OnInit {
 
         },
         error:(error)=>{
-          this.toast.error({detail:"Error",summary:error.message})
+          this.toast.error({detail:"Error",summary:"Error in adding property"})
         }
       })
     }else{
@@ -61,7 +61,7 @@ export class AddPropertyDialogComponent implements OnInit {
         this.propertyForm.reset();
         this.dialogRef.close("updatedProperty");
       },error:(error)=>{
-        this.toast.error({detail:"Error",summary:error.message})
+        this.toast.error({detail:"Error",summary:"Error in updating property"})
       },
     })
   }
