@@ -13,6 +13,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {NgToastModule} from "ng-angular-popup";
+
 
 import { AddPropertyDialogComponent } from './add-property-dialog/add-property-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -40,7 +43,8 @@ import { SizePipe } from './pipes/size.pipe';
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    NgToastModule
 
   ],
   providers: [],

@@ -3,6 +3,7 @@ import { PropertyApiService } from './../services/property-api.service';
 import { Component, OnInit,Inject } from '@angular/core';
 import { FormGroup,FormBuilder,Validators } from '@angular/forms';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { NgToastService } from "ng-angular-popup";
 
 @Component({
   selector: 'app-add-property-dialog',
@@ -12,7 +13,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 export class AddPropertyDialogComponent implements OnInit {
   propertyForm!:FormGroup;
   buttonOperationName:String="Add Property";
-  constructor(private FormBuilder:FormBuilder,private dialogRef:MatDialogRef<AddPropertyDialogComponent>,private propertyApiService:PropertyApiService,@Inject(MAT_DIALOG_DATA) private editdata:any) {
+  constructor(private FormBuilder:FormBuilder,private dialogRef:MatDialogRef<AddPropertyDialogComponent>,private propertyApiService:PropertyApiService,@Inject(MAT_DIALOG_DATA) private editdata:any,private toast:NgToastService) {
 
   }
 
@@ -37,13 +38,13 @@ export class AddPropertyDialogComponent implements OnInit {
       this.propertyApiService.createProperty(this.propertyForm.value)
       .subscribe({
         next:(data)=>{
-          alert(`Property Added Successfully`);
+          this.toast.success({detail:"Created",summary:"Property created successfully"});
           this.propertyForm.reset();
           this.dialogRef.close("AddedProperty");
 
         },
         error:(error)=>{
-          alert(error.message)
+          this.toast.error({detail:"Error",summary:error.message})
         }
       })
     }else{
@@ -56,11 +57,11 @@ export class AddPropertyDialogComponent implements OnInit {
     this.propertyApiService.updateProperty(propertyFormData,id)
     .subscribe({
       next:(value)=>{
-        alert(`Property update Successfully`);
+        this.toast.success({detail:"updated",summary:"Property updated successfully"});
         this.propertyForm.reset();
         this.dialogRef.close("updatedProperty");
-      },error:(err)=>{
-          alert(err.message)
+      },error:(error)=>{
+        this.toast.error({detail:"Error",summary:error.message})
       },
     })
   }

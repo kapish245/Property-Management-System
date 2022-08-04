@@ -6,6 +6,8 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { NgToastService } from "ng-angular-popup";
+
 
 export interface DialogData {
   test: string;
@@ -32,7 +34,8 @@ export class AppComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private dialog: MatDialog,
-    private propertyApiService: PropertyApiService
+    private propertyApiService: PropertyApiService,
+    private toast:NgToastService
   ) {}
 
   ngOnInit(): void {
@@ -87,11 +90,11 @@ export class AppComponent implements OnInit {
     this.propertyApiService.deleteProperty(id)
     .subscribe({
       next:(value)=>{
-        alert("property Deleted Successfully");
+        this.toast.success({detail:"Deleted",summary:"property Deleted Successfully"});
         this.getAllPropertyData();
       },
-      error:(err)=>{
-        alert(err.message);
+      error:(error)=>{
+        this.toast.error({detail:"Error",summary:error.message})
       }
     })
   }
